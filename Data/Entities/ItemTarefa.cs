@@ -12,5 +12,6 @@ namespace Data.Entities
         [ForeignKey("Tarefa")]
         [Column(Order = 1)]
         public int IdTarefa { get; set; }
+        //public virtual Tarefa Tarefa { get; set; }
     }
 }

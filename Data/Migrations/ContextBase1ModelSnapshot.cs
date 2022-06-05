@@ -43,6 +43,8 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdTarefa");
+
                     b.ToTable("ItemTarefa");
                 });
 
@@ -61,6 +63,17 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tarefa");
+                });
+
+            modelBuilder.Entity("Data.Entities.ItemTarefa", b =>
+                {
+                    b.HasOne("Data.Entities.Tarefa", "Tarefa")
+                        .WithMany()
+                        .HasForeignKey("IdTarefa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tarefa");
                 });
 #pragma warning restore 612, 618
         }

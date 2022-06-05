@@ -9,6 +9,19 @@ namespace Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Tarefa",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tarefa", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ItemTarefa",
                 columns: table => new
                 {
@@ -21,20 +34,18 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ItemTarefa", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemTarefa_Tarefa_IdTarefa",
+                        column: x => x.IdTarefa,
+                        principalTable: "Tarefa",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Tarefa",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tarefa", x => x.Id);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemTarefa_IdTarefa",
+                table: "ItemTarefa",
+                column: "IdTarefa");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
